@@ -1,16 +1,17 @@
 const express = require('express')
+
 const mongoose = require('mongoose')
 require("dotenv").config();
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const mongoURL = "mongodb://127.0.0.1:27017/mern-project";
+const mongoURL = "mongodb://127.0.0.1:27017/taski-management";
 const taskRoutes = require('./routes/tasks')
 const userRoutes = require('./routes/users');
 
 mongoose.connect(mongoURL)
 .then(()=>{
     console.log('Connected to database');
-    app.listen(4000,()=>{
+    app.listen(process.env.PORT,()=>{
     console.log('server is running on port 4000')
 })
 }).catch(err=>{
@@ -18,6 +19,7 @@ mongoose.connect(mongoURL)
 })
 
 const app = express()
+app.use(express.static("public"));
 app.use(morgan("dev"));
 app.use(cookieParser())
 app.use(express.json());
